@@ -1,5 +1,5 @@
 #pragma once
-#include "../ThirdParty/GLFW/glfw3.h"
+#include "../ThirdParty/API/GLFW/glfw3.h"
 class Editor
 {
 public:

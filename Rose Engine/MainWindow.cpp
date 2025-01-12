@@ -1,5 +1,5 @@
-#include "vulkan/vulkan.h"
-#include "glfw3.h"
+#include "ThirdParty/API/Vulkan/Include/vulkan/vulkan.h"
+#include "ThirdParty/API/GLFW/glfw3.h"
 #include <iostream>
 #include "MainWindow.h"
 
