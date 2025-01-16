@@ -1,3 +1,4 @@
+#include "ThirdParty/API/imgui-1.91.7/imgui.h"
 #include "ThirdParty/API/Vulkan/Include/vulkan/vulkan.h"
 #include "ThirdParty/API/GLFW/glfw3.h"
 #include <iostream>
@@ -5,6 +6,7 @@
 
 int MainWindow::initializeWindow()
 {
+    ImGui::CreateContext();
     glfwInit();
 
     glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
