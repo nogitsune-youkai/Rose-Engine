@@ -144,9 +144,11 @@
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="ThirdParty\API\imgui-1.91.7\imgui.cpp" />
+    <ClCompile Include="ThirdParty\API\imgui-1.91.7\imgui_demo.cpp" />
     <ClCompile Include="ThirdParty\API\imgui-1.91.7\imgui_draw.cpp" />
     <ClCompile Include="ThirdParty\API\imgui-1.91.7\imgui_tables.cpp" />
     <ClCompile Include="ThirdParty\API\imgui-1.91.7\imgui_widgets.cpp" />
+    <ClCompile Include="VulkanBackend.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GUI\Editor.h" />
@@ -154,6 +156,7 @@
     <ClInclude Include="ThirdParty\API\imgui-1.91.7\imconfig.h" />
     <ClInclude Include="ThirdParty\API\imgui-1.91.7\imgui.h" />
     <ClInclude Include="ThirdParty\API\imgui-1.91.7\imgui_internal.h" />
+    <ClInclude Include="VulkanBackend.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
