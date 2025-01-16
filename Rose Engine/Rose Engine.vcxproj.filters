@@ -42,7 +42,7 @@
     <ClCompile Include="ThirdParty\API\imgui-1.91.7\imgui_demo.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="VulkanBackend.cpp">
+    <ClCompile Include="Engine\Core\GraphicsAPI\Vulkan\VulkanBackend.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -62,7 +62,7 @@
     <ClInclude Include="ThirdParty\API\imgui-1.91.7\imgui_internal.h">
       <Filter>Imgui</Filter>
     </ClInclude>
-    <ClInclude Include="VulkanBackend.h">
+    <ClInclude Include="Engine\Core\GraphicsAPI\Vulkan\VulkanBackend.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
