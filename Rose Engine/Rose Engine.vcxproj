@@ -120,7 +120,7 @@
       <IgnoreSpecificDefaultLibraries>libcmt.lib;msvcrt.lib;libcmtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
     <PostBuildEvent>
-      <Command>xcopy  "$(ProjectDir)ThirdParty\Libraries\AGS\lib\amd_ags_x64.dll" "$(OutDir)" </Command>
+      <Command>xcopy /y "$(ProjectDir)ThirdParty\Libraries\AGS\lib\amd_ags_x64.dll" "$(OutDir)" </Command>
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
