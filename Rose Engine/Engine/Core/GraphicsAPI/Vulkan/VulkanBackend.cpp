@@ -105,7 +105,6 @@ void VulkanBackend::setupDebugMessenger()
 
 void VulkanBackend::pickPhysicalDevice()
 {
-	// get a suitable physical GPU, in this function we can add more checks for GPUs
 	uint32_t deviceCount = 0;
 	vkEnumeratePhysicalDevices(vulkanInstance, &deviceCount, nullptr);
 
@@ -128,6 +127,16 @@ void VulkanBackend::pickPhysicalDevice()
 
 bool VulkanBackend::isDeviceSuitable(VkPhysicalDevice GPU)
 {
+	// get a suitable physical GPU, in this function we can add more checks for GPUs
+	// and output various GPU information for debug purposes
+	VkPhysicalDeviceProperties gpuProperties;
+	vkGetPhysicalDeviceProperties(GPU, &gpuProperties);
+	if (enableValidationLayers) {
+		std::cerr << "Selected device: " << gpuProperties.deviceName << std::endl;
+		std::cerr << "Driver version : " << gpuProperties.driverVersion << std::endl;
+	}
+	VkPhysicalDeviceFeatures gpuFeatures;
+	
 	// does GPU support commands that we need?
 	QueueFamilyIndices indices = findQueueFamilies(GPU);
 	return indices.isComplete();
@@ -145,7 +154,7 @@ QueueFamilyIndices VulkanBackend::findQueueFamilies(VkPhysicalDevice GPU)
 	vkGetPhysicalDeviceQueueFamilyProperties(GPU, &queueFamilyCount, queueFamilies.data());
 	int i = 0;
 	for (const auto& queueFamily : queueFamilies) {
-		if (queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT) {
+		if (queueFamily.queueFlags && VK_QUEUE_GRAPHICS_BIT && VK_QUEUE_COMPUTE_BIT && VK_QUEUE_TRANSFER_BIT) {
 			indices.graphicsFamily = i;
 		}
 		if (indices.isComplete()) {
@@ -220,7 +229,7 @@ VKAPI_ATTR VkBool32 VKAPI_CALL VulkanBackend::debugCallback(VkDebugUtilsMessageS
 {
 	// this is for debugging, probably gonna use it in logger
 	std::cerr << "validation layer: " << pCallbackData->pMessage << std::endl;
-	//std::cerr << "GPU information: "  << &isDeviceSuitable << std::endl;
+	//std::cerr << "GPU information: "  <<  << std::endl;
 
 	return VK_FALSE;
 }
