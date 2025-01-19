@@ -1,7 +1,6 @@
 #include "VulkanBackend.h"
 
 
-
 const std::vector<const char*> validationLayers = {
 	"VK_LAYER_KHRONOS_validation"
 };
@@ -49,12 +48,13 @@ void VulkanBackend::createInstance()
 	VkInstanceCreateInfo createInfo = {};
 	createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
 	createInfo.pApplicationInfo = &appInfo;
+	
 
 	
 
 	auto extensions = getRequiredExtensions();
 	createInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
-	createInfo.ppEnabledExtensionNames = extensions.data();
+	createInfo.ppEnabledExtensionNames = extensions.data(); // ppEnabledExtensionsName are used to enable extensions for a given type, VkDevice for example, etc
 	
 	// so basically by setting up debug messenger here using populate populateDebugMessengerCreateInfo 
 	// it will automatically be used for every vkCreateInstance and vkDestroyInstance calls, so we can now track what happens 
@@ -131,9 +131,11 @@ bool VulkanBackend::isDeviceSuitable(VkPhysicalDevice GPU)
 	// and output various GPU information for debug purposes
 	VkPhysicalDeviceProperties gpuProperties;
 	vkGetPhysicalDeviceProperties(GPU, &gpuProperties);
+	//gpuProperties.driverVersion = static_cast<char*>(gpuDriverInfo.driverName);
 	if (enableValidationLayers) {
 		std::cerr << "Selected device: " << gpuProperties.deviceName << std::endl;
-		std::cerr << "Driver version : " << gpuProperties.driverVersion << std::endl;
+		std::cout << "NVIDIA Driver version : " << gpuProperties.driverVersion << std::endl; // i should test it for nvidia GPU
+		gpuInfo.InitializeAGSLib(); // print gpu information for debug
 	}
 	VkPhysicalDeviceFeatures gpuFeatures;
 	

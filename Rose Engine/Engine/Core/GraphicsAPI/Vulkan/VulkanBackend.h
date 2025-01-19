@@ -1,12 +1,15 @@
 #pragma once
+
 #include <stdint.h>
 #include <stdexcept>
 #include <vector>
 #include <iostream>
 #include <optional>
 
+
 #include "vulkan/vulkan.h"
 #include "glfw3.h"
+#include "../GPU Information/GPUInformation.h"
 
 struct QueueFamilyIndices {
 	// here we gonna store Queue families
@@ -45,6 +48,6 @@ private:
 	VkInstance vulkanInstance;
 	VkDebugUtilsMessengerEXT debugMessenger;
 	VkPhysicalDevice physicalDevice = VK_NULL_HANDLE; // GPU for rendering, it is destroyed implicitly when the vkInstance destroyed
-	
+	GPUInformation gpuInfo; // with this object we can get information about gpu such as: driverVersion, vendor, etc in readable format
 };
 
