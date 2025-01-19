@@ -18,6 +18,7 @@ void VulkanBackend::initVulkan()
 {
 	createInstance();
 	setupDebugMessenger();
+	pickPhysicalDevice();
 }
 
 void VulkanBackend::cleanUp()
@@ -102,6 +103,59 @@ void VulkanBackend::setupDebugMessenger()
 	}
 }
 
+void VulkanBackend::pickPhysicalDevice()
+{
+	// get a suitable physical GPU, in this function we can add more checks for GPUs
+	uint32_t deviceCount = 0;
+	vkEnumeratePhysicalDevices(vulkanInstance, &deviceCount, nullptr);
+
+	if (deviceCount == 0) {
+		throw std::runtime_error("failed to find GPUs with Vulkan support!");
+	}
+	std::vector<VkPhysicalDevice> physicalGPUs(deviceCount);
+	vkEnumeratePhysicalDevices(vulkanInstance, &deviceCount, physicalGPUs.data());
+
+	for (const auto& GPU : physicalGPUs) {
+		if (isDeviceSuitable(GPU)) {
+			physicalDevice = GPU;
+			break;
+		}
+	}
+	if (physicalDevice == VK_NULL_HANDLE) {
+		throw std::runtime_error("failed to find a suitable GPU!");
+	}
+}
+
+bool VulkanBackend::isDeviceSuitable(VkPhysicalDevice GPU)
+{
+	// does GPU support commands that we need?
+	QueueFamilyIndices indices = findQueueFamilies(GPU);
+	return indices.isComplete();
+}
+
+QueueFamilyIndices VulkanBackend::findQueueFamilies(VkPhysicalDevice GPU)
+{
+	//Queues are essentially simply accept different commands supported by GPUs and as far as i can see
+	// all the gpus support 4 most common flags which are - VK_QUEUE_GRAPHICS_BIT, VK_QUEUE_COMPUTE_BIT
+	// VK_QUEUE_TRANSFER_BIT and VK_QUEUE_SPARSE_BINDING_BIT
+	QueueFamilyIndices indices;
+	uint32_t queueFamilyCount = 0;
+	vkGetPhysicalDeviceQueueFamilyProperties(GPU, &queueFamilyCount, nullptr);
+	std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
+	vkGetPhysicalDeviceQueueFamilyProperties(GPU, &queueFamilyCount, queueFamilies.data());
+	int i = 0;
+	for (const auto& queueFamily : queueFamilies) {
+		if (queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT) {
+			indices.graphicsFamily = i;
+		}
+		if (indices.isComplete()) {
+			break;
+		}
+		i++;
+	}
+	return indices;
+}
+
 VkResult VulkanBackend::createDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pDebugMessenger)
 {
 	// The vkGetInstanceProcAddr function will return nullptr if the function couldn’t be loaded.
@@ -166,7 +220,7 @@ VKAPI_ATTR VkBool32 VKAPI_CALL VulkanBackend::debugCallback(VkDebugUtilsMessageS
 {
 	// this is for debugging, probably gonna use it in logger
 	std::cerr << "validation layer: " << pCallbackData->pMessage << std::endl;
-
+	//std::cerr << "GPU information: "  << &isDeviceSuitable << std::endl;
 
 	return VK_FALSE;
 }

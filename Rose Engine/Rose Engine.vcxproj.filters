@@ -16,15 +16,27 @@
     <Filter Include="Imgui">
       <UniqueIdentifier>{139610ac-b275-494b-8b70-610ee38e07f9}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\GraphicsAPI">
+      <UniqueIdentifier>{01f1ba87-ecd7-454c-a821-990ea2a88e97}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Editor">
+      <UniqueIdentifier>{edf220b1-48a6-4599-9062-e39544dc6683}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Editor\GUI">
+      <UniqueIdentifier>{43432bad-15ef-41d8-a8ca-292abc265fe6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\GraphicsAPI">
+      <UniqueIdentifier>{73707232-4f03-4522-9159-2b02e2eec381}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Editor">
+      <UniqueIdentifier>{c20fc53b-f336-4a56-aa7e-e81c1e631a53}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Header Files\Editor\GUI">
+      <UniqueIdentifier>{eafbe86a-d26f-43cf-b43e-29fae9b94d5f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GUI\Editor.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="MainWindow.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="ThirdParty\API\imgui-1.91.7\imgui.cpp">
@@ -43,16 +55,16 @@
       <Filter>Imgui</Filter>
     </ClCompile>
     <ClCompile Include="Engine\Core\GraphicsAPI\Vulkan\VulkanBackend.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\GraphicsAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="MainWindow.cpp">
+      <Filter>Source Files\Editor\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI\Editor.cpp">
+      <Filter>Source Files\Editor\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GUI\Editor.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="MainWindow.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="ThirdParty\API\imgui-1.91.7\imgui.h">
       <Filter>Imgui</Filter>
     </ClInclude>
@@ -63,7 +75,13 @@
       <Filter>Imgui</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Core\GraphicsAPI\Vulkan\VulkanBackend.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\GraphicsAPI</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI\Editor.h">
+      <Filter>Header Files\Editor\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="MainWindow.h">
+      <Filter>Header Files\Editor\GUI</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
