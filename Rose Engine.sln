@@ -5,7 +5,7 @@ VisualStudioVersion = 17.12.35527.113
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "Rose Engine", "Rose Engine\Rose Engine.vcxproj", "{F263E49B-3622-4F89-BEA7-A449414E3A16}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupDebug", "Setup1\Setup1.vdproj", "{D35BC4DD-C0E6-4F0C-AB4A-DA8DEF8442C2}"
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "SetupDebug", "Setup\Setup.vdproj", "{D35BC4DD-C0E6-4F0C-AB4A-DA8DEF8442C2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
