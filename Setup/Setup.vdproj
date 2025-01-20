@@ -73,7 +73,7 @@
         "PackageFilesAs" = "3:2"
         "PackageFileSize" = "3:-2147483648"
         "CabType" = "3:1"
-        "Compression" = "3:2"
+        "Compression" = "3:1"
         "SignOutput" = "11:FALSE"
         "CertificateFile" = "8:"
         "PrivateKeyFile" = "8:"
@@ -118,6 +118,14 @@
             "PrerequisitesLocation" = "2:1"
             "Url" = "8:"
             "ComponentsUrl" = "8:"
+                "Items"
+                {
+                    "{EDC2488A-8267-493A-A98E-7D9C3B36CDF3}:.NETFramework,Version=v4.7.2"
+                    {
+                    "Name" = "8:Microsoft .NET Framework 4.7.2 (x86 and x64)"
+                    "ProductCode" = "8:.NETFramework,Version=v4.7.2"
+                    }
+                }
             }
         }
     }
@@ -348,7 +356,7 @@
         "Name" = "8:Microsoft Visual Studio"
         "ProductName" = "8:Rose Engine"
         "ProductCode" = "8:{734956CE-3575-41AA-99F1-45E9107A45F3}"
-        "PackageCode" = "8:{2CDC735D-147D-4576-8CFA-10771A65E7C1}"
+        "PackageCode" = "8:{08CBA29D-96FF-4793-A74A-8C9493257C2C}"
         "UpgradeCode" = "8:{C24E1C24-57FE-4635-ABFF-B50D869A1114}"
         "AspNetVersion" = "8:2.0.50727.0"
         "RestartWWWService" = "11:FALSE"

@@ -32,18 +32,21 @@ void VulkanBackend::cleanUp()
 void VulkanBackend::createInstance()
 {
 	if (enableValidationLayers && !checkValidationLayerSupport()) {
-		throw std::runtime_error("validation layers requested, but not available!");
+		std::runtime_error validationLayersError("validation layers requested, but not available!");
+		std::cout << validationLayersError.what() << std::endl;
 	}
-
+	
+		
+	
 	// initialize vulkan library by creating it's instance
 	VkApplicationInfo appInfo{};
 	appInfo.sType = VK_STRUCTURE_TYPE_APPLICATION_INFO; // sType stands for structure type
 	appInfo.pNext = nullptr; // pNext is a pointer which is pointing to extension information, that will be useful later
 	appInfo.pApplicationName = "Counter Fuck: blood and gore";
-	appInfo.applicationVersion = VK_MAKE_API_VERSION(0, 0, 1, 0);
+	appInfo.applicationVersion = VK_MAKE_API_VERSION(0, 1, 3, 0);
 	appInfo.pEngineName = "Rose Engine";
-	appInfo.engineVersion = VK_MAKE_API_VERSION(0, 0, 1, 0);
-	appInfo.apiVersion = VK_API_VERSION_1_3;
+	appInfo.engineVersion = VK_MAKE_API_VERSION(0, 1, 3, 0);
+	appInfo.apiVersion = VK_API_VERSION_1_4;
 
 	VkInstanceCreateInfo createInfo = {};
 	createInfo.sType = VK_STRUCTURE_TYPE_INSTANCE_CREATE_INFO;
@@ -73,7 +76,8 @@ void VulkanBackend::createInstance()
 	}
 
 	if (vkCreateInstance(&createInfo, nullptr, &vulkanInstance) != VK_SUCCESS) {
-		throw std::runtime_error("failed to create instance!");
+		std::runtime_error vulkanInstanceError("failed to create instance!");
+		std::cout << vulkanInstanceError.what() << std::endl;
 	}
 }
 
@@ -99,7 +103,8 @@ void VulkanBackend::setupDebugMessenger()
 
 
 	if (createDebugUtilsMessengerEXT(vulkanInstance, &createInfo, nullptr, &debugMessenger) != VK_SUCCESS) {
-		throw std::runtime_error("failed to set up debug messenger!");
+		std::runtime_error debugMessengerError("failed to set up debug messenger!");
+		std::cout << debugMessengerError.what() << std::endl;
 	}
 }
 
@@ -109,7 +114,8 @@ void VulkanBackend::pickPhysicalDevice()
 	vkEnumeratePhysicalDevices(vulkanInstance, &deviceCount, nullptr);
 
 	if (deviceCount == 0) {
-		throw std::runtime_error("failed to find GPUs with Vulkan support!");
+		std::runtime_error deviceCountError("failed to find GPUs with Vulkan support!");
+		std::cout << deviceCountError.what() << std::endl;
 	}
 	std::vector<VkPhysicalDevice> physicalGPUs(deviceCount);
 	vkEnumeratePhysicalDevices(vulkanInstance, &deviceCount, physicalGPUs.data());
@@ -121,7 +127,8 @@ void VulkanBackend::pickPhysicalDevice()
 		}
 	}
 	if (physicalDevice == VK_NULL_HANDLE) {
-		throw std::runtime_error("failed to find a suitable GPU!");
+		std::runtime_error physicalDeviceError("failed to find a suitable GPU!");
+		std::cout << physicalDeviceError.what() << std::endl;
 	}
 }
 
@@ -137,7 +144,7 @@ bool VulkanBackend::isDeviceSuitable(VkPhysicalDevice GPU)
 		std::cout << "NVIDIA Driver version : " << gpuProperties.driverVersion << std::endl; // i should test it for nvidia GPU
 		gpuInfo.InitializeAGSLib(); // print gpu information for debug
 	}
-	VkPhysicalDeviceFeatures gpuFeatures;
+	//VkPhysicalDeviceFeatures gpuFeatures;
 	
 	// does GPU support commands that we need?
 	QueueFamilyIndices indices = findQueueFamilies(GPU);
@@ -231,7 +238,7 @@ VKAPI_ATTR VkBool32 VKAPI_CALL VulkanBackend::debugCallback(VkDebugUtilsMessageS
 {
 	// this is for debugging, probably gonna use it in logger
 	std::cerr << "validation layer: " << pCallbackData->pMessage << std::endl;
-	//std::cerr << "GPU information: "  <<  << std::endl;
+	
 
 	return VK_FALSE;
 }

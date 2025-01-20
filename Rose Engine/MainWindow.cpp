@@ -16,17 +16,14 @@ int MainWindow::initializeWindow()
 
     if (!glfwVulkanSupported())
     {
-        printf("GLFW: Vulkan Not Supported\n");
+        std::exception GLFWWindowError("GLFW: Vulkan Not Supported\n");
+        std::cout << GLFWWindowError.what() << std::endl;
         return 1;
     }
 
     vulkanBackend.initVulkan();
 
-    ImGui::CreateContext();
     
-    ImGui::StyleColorsDark();
-
-    ImGuiIO& io = ImGui::GetIO(); (void)io;
     
     while (!glfwWindowShouldClose(window)) {
         glfwPollEvents();
@@ -48,7 +45,7 @@ int MainWindow::initializeWindow()
         //ImGui::Render();
         //glfwSwapBuffers(window);
     }
-    ImGui::DestroyContext();
+    
 
     vulkanBackend.cleanUp(); // vulkan instance must be destroyed right before program exits
     glfwDestroyWindow(window);
