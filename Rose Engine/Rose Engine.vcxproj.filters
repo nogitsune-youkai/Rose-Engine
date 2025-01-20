@@ -5,10 +5,6 @@
       <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
       <Extensions>cpp;c;cc;cxx;c++;cppm;ixx;def;odl;idl;hpj;bat;asm;asmx</Extensions>
     </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
-      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
-    </Filter>
     <Filter Include="Resource Files">
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
@@ -16,29 +12,20 @@
     <Filter Include="Imgui">
       <UniqueIdentifier>{139610ac-b275-494b-8b70-610ee38e07f9}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\GraphicsAPI">
-      <UniqueIdentifier>{01f1ba87-ecd7-454c-a821-990ea2a88e97}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Editor">
-      <UniqueIdentifier>{edf220b1-48a6-4599-9062-e39544dc6683}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Editor\GUI">
-      <UniqueIdentifier>{43432bad-15ef-41d8-a8ca-292abc265fe6}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\GraphicsAPI">
-      <UniqueIdentifier>{73707232-4f03-4522-9159-2b02e2eec381}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\Editor">
+    <Filter Include="Editor">
       <UniqueIdentifier>{c20fc53b-f336-4a56-aa7e-e81c1e631a53}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\Editor\GUI">
+    <Filter Include="Editor\GUI">
       <UniqueIdentifier>{eafbe86a-d26f-43cf-b43e-29fae9b94d5f}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\GraphicsAPI\GPU Information">
-      <UniqueIdentifier>{e9222ffd-12cf-4198-968c-36ece743afb7}</UniqueIdentifier>
+    <Filter Include="GraphicsAPI">
+      <UniqueIdentifier>{73707232-4f03-4522-9159-2b02e2eec381}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\GraphicsAPI\GPU Information">
-      <UniqueIdentifier>{c492ffca-108f-4eed-bbdc-1184bf1840b0}</UniqueIdentifier>
+    <Filter Include="Debug">
+      <UniqueIdentifier>{5d7b7f20-8012-4c9f-abe1-858741eb7499}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Debug\GPU Information">
+      <UniqueIdentifier>{e9222ffd-12cf-4198-968c-36ece743afb7}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -60,17 +47,17 @@
     <ClCompile Include="ThirdParty\API\imgui-1.91.7\imgui_demo.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="Engine\Core\GraphicsAPI\Vulkan\VulkanBackend.cpp">
-      <Filter>Source Files\GraphicsAPI</Filter>
+    <ClCompile Include="GPUInformation.cpp">
+      <Filter>Debug\GPU Information</Filter>
     </ClCompile>
-    <ClCompile Include="MainWindow.cpp">
-      <Filter>Source Files\Editor\GUI</Filter>
+    <ClCompile Include="Engine\Core\GraphicsAPI\Vulkan\VulkanBackend.cpp">
+      <Filter>GraphicsAPI</Filter>
     </ClCompile>
     <ClCompile Include="GUI\Editor.cpp">
-      <Filter>Source Files\Editor\GUI</Filter>
+      <Filter>Editor\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="GPUInformation.cpp">
-      <Filter>Source Files\GraphicsAPI\GPU Information</Filter>
+    <ClCompile Include="MainWindow.cpp">
+      <Filter>Editor\GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -84,16 +71,16 @@
       <Filter>Imgui</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Core\GraphicsAPI\Vulkan\VulkanBackend.h">
-      <Filter>Header Files\GraphicsAPI</Filter>
+      <Filter>GraphicsAPI</Filter>
     </ClInclude>
     <ClInclude Include="GUI\Editor.h">
-      <Filter>Header Files\Editor\GUI</Filter>
+      <Filter>Editor\GUI</Filter>
     </ClInclude>
     <ClInclude Include="MainWindow.h">
-      <Filter>Header Files\Editor\GUI</Filter>
+      <Filter>Editor\GUI</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Core\GraphicsAPI\GPU Information\GPUInformation.h">
-      <Filter>Header Files\GraphicsAPI\GPU Information</Filter>
+      <Filter>Debug\GPU Information</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
