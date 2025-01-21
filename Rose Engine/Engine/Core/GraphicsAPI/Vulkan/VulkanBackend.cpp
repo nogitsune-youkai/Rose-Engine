@@ -18,11 +18,13 @@ void VulkanBackend::initVulkan()
 	createInstance();
 	setupDebugMessenger();
 	pickPhysicalDevice();
+	createLogicalDevice();
 }
 
 void VulkanBackend::cleanUp()
 {
 	// vulkan instance must be destroyed right before program exits, all other vulkan resources must be destroyed before the instance destroyed
+	vkDestroyDevice(logicalDevice, nullptr);
 	if (enableValidationLayers) {
 		destroyDebugUtilsMessengerEXT(vulkanInstance, debugMessenger, nullptr);
 	}
@@ -130,6 +132,35 @@ void VulkanBackend::pickPhysicalDevice()
 		std::runtime_error physicalDeviceError("failed to find a suitable GPU!");
 		std::cout << physicalDeviceError.what() << std::endl;
 	}
+}
+
+void VulkanBackend::createLogicalDevice()
+{
+	QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
+
+	VkDeviceQueueCreateInfo queueCreateInfo{};
+	queueCreateInfo.sType =	VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+	queueCreateInfo.queueFamilyIndex = indices.graphicsFamily.value();
+	queueCreateInfo.queueCount = 1;
+
+	float queuePriority = 1.0f;
+	queueCreateInfo.pQueuePriorities = &queuePriority;
+
+	VkPhysicalDeviceFeatures logicalDeviceFeatures{};
+
+	VkDeviceCreateInfo logicalDeviceCreateInfo{};
+	logicalDeviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+	logicalDeviceCreateInfo.pQueueCreateInfos = &queueCreateInfo;
+	logicalDeviceCreateInfo.queueCreateInfoCount = 1;
+
+	logicalDeviceCreateInfo.pEnabledFeatures = &logicalDeviceFeatures;
+	logicalDeviceCreateInfo.enabledExtensionCount = 0; // enable swapchain extension for gpu
+
+	if (vkCreateDevice(physicalDevice, &logicalDeviceCreateInfo, nullptr, &logicalDevice) != VK_SUCCESS) {
+		std::runtime_error logicalDeviceError("Failed to create logical device");
+		std::cout << logicalDeviceError.what() << std::endl;
+	}
+	vkGetDeviceQueue(logicalDevice, indices.graphicsFamily.value(), 0, &graphicsQueue);
 }
 
 bool VulkanBackend::isDeviceSuitable(VkPhysicalDevice GPU)

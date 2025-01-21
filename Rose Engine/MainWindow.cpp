@@ -1,6 +1,3 @@
-#include "ThirdParty/API/imgui-1.91.7/imgui.h"
-#include "ThirdParty/API/GLFW/glfw3.h"
-#include <iostream>
 #include "MainWindow.h"
 
 int MainWindow::initializeWindow()

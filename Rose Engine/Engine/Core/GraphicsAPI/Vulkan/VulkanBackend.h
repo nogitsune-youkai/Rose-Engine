@@ -34,6 +34,7 @@ private:
 	void populateDebugMessengerCreateInfo(VkDebugUtilsMessengerCreateInfoEXT& debugUtilsMessengerCreateInfo);
 	void setupDebugMessenger();
 	void pickPhysicalDevice();
+	void createLogicalDevice();
 	bool isDeviceSuitable(VkPhysicalDevice GPU);
 	
 	QueueFamilyIndices findQueueFamilies(VkPhysicalDevice GPU);
@@ -50,5 +51,7 @@ private:
 	VkDebugUtilsMessengerEXT debugMessenger;
 	VkPhysicalDevice physicalDevice = VK_NULL_HANDLE; // GPU for rendering, it is destroyed implicitly when the vkInstance destroyed
 	GPUInformation gpuInfo; // with this object we can get information about gpu such as: driverVersion, vendor, etc in readable format
+	VkDevice logicalDevice;
+	VkQueue graphicsQueue = VK_NULL_HANDLE;
 };
 

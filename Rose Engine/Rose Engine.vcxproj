@@ -109,6 +109,7 @@
       <LanguageStandard_C>stdclatest</LanguageStandard_C>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <Optimization>Disabled</Optimization>
+      <ShowIncludes>false</ShowIncludes>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
