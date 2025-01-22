@@ -56,9 +56,6 @@
     <ClCompile Include="GUI\Editor.cpp">
       <Filter>Editor\GUI</Filter>
     </ClCompile>
-    <ClCompile Include="MainWindow.cpp">
-      <Filter>Editor\GUI</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ThirdParty\API\imgui-1.91.7\imgui.h">
@@ -74,9 +71,6 @@
       <Filter>GraphicsAPI</Filter>
     </ClInclude>
     <ClInclude Include="GUI\Editor.h">
-      <Filter>Editor\GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="MainWindow.h">
       <Filter>Editor\GUI</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Core\GraphicsAPI\GPU Information\GPUInformation.h">

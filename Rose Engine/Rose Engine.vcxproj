@@ -150,7 +150,6 @@
     <ClCompile Include="GPUInformation.cpp" />
     <ClCompile Include="GUI\Editor.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="MainWindow.cpp" />
     <ClCompile Include="ThirdParty\API\imgui-1.91.7\imgui.cpp" />
     <ClCompile Include="ThirdParty\API\imgui-1.91.7\imgui_demo.cpp" />
     <ClCompile Include="ThirdParty\API\imgui-1.91.7\imgui_draw.cpp" />
@@ -161,7 +160,6 @@
   <ItemGroup>
     <ClInclude Include="Engine\Core\GraphicsAPI\GPU Information\GPUInformation.h" />
     <ClInclude Include="GUI\Editor.h" />
-    <ClInclude Include="MainWindow.h" />
     <ClInclude Include="ThirdParty\API\imgui-1.91.7\imconfig.h" />
     <ClInclude Include="ThirdParty\API\imgui-1.91.7\imgui.h" />
     <ClInclude Include="ThirdParty\API\imgui-1.91.7\imgui_internal.h" />

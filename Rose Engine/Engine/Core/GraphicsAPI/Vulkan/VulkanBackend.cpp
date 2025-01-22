@@ -17,6 +17,7 @@ void VulkanBackend::initVulkan()
 {
 	createInstance();
 	setupDebugMessenger();
+	createSurface();
 	pickPhysicalDevice();
 	createLogicalDevice();
 }
@@ -24,11 +25,44 @@ void VulkanBackend::initVulkan()
 void VulkanBackend::cleanUp()
 {
 	// vulkan instance must be destroyed right before program exits, all other vulkan resources must be destroyed before the instance destroyed
+	
 	vkDestroyDevice(logicalDevice, nullptr);
 	if (enableValidationLayers) {
 		destroyDebugUtilsMessengerEXT(vulkanInstance, debugMessenger, nullptr);
 	}
+	vkDestroySurfaceKHR(vulkanInstance, vulkanWindowSurface, nullptr);
 	vkDestroyInstance(vulkanInstance, nullptr);
+	glfwDestroyWindow(window);
+	glfwTerminate();
+}
+
+int VulkanBackend::createVulkanWindow()
+{
+	glfwInit();
+
+	glfwWindowHint(GLFW_CLIENT_API, GLFW_NO_API);
+	glfwWindowHint(GLFW_RESIZABLE, GLFW_FALSE);
+
+	window = glfwCreateWindow(1280, 720, "Vulkan window", nullptr, nullptr);
+
+	initVulkan();
+
+	 if (!glfwVulkanSupported())
+	 {
+		 std::exception GLFWWindowError("GLFW: Vulkan Not Supported\n");
+		 std::cout << GLFWWindowError.what() << std::endl;
+		 return 1;
+	 }
+
+	 
+
+	 while (!glfwWindowShouldClose(window)) {
+		 glfwPollEvents();
+
+	 }
+
+	 cleanUp(); // vulkan instance must be destroyed right before program exits
+	 return 0;
 }
 
 void VulkanBackend::createInstance()
@@ -57,7 +91,8 @@ void VulkanBackend::createInstance()
 
 	
 
-	auto extensions = getRequiredExtensions();
+	auto extensions = getRequiredExtensions(); // hmm, for some reason i enable KHR_surface here, but i should do it after instance creation
+												// because it can actually influence physical device selection
 	createInfo.enabledExtensionCount = static_cast<uint32_t>(extensions.size());
 	createInfo.ppEnabledExtensionNames = extensions.data(); // ppEnabledExtensionsName are used to enable extensions for a given type, VkDevice for example, etc
 	
@@ -110,6 +145,14 @@ void VulkanBackend::setupDebugMessenger()
 	}
 }
 
+void VulkanBackend::createSurface()
+{
+	if (glfwCreateWindowSurface(vulkanInstance, window, nullptr, &vulkanWindowSurface) != VK_SUCCESS) {
+		std::runtime_error createSurfaceError("failed to create window surface!");
+		std::cout <<  createSurfaceError.what() << std::endl;
+	}
+}
+
 void VulkanBackend::pickPhysicalDevice()
 {
 	uint32_t deviceCount = 0;
@@ -138,20 +181,27 @@ void VulkanBackend::createLogicalDevice()
 {
 	QueueFamilyIndices indices = findQueueFamilies(physicalDevice);
 
-	VkDeviceQueueCreateInfo queueCreateInfo{};
-	queueCreateInfo.sType =	VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
-	queueCreateInfo.queueFamilyIndex = indices.graphicsFamily.value();
-	queueCreateInfo.queueCount = 1;
-
+	std::vector<VkDeviceQueueCreateInfo> queueCreateInfoStructures;
+	std::set<uint32_t> uniqueQueueFamilies = { 
+		indices.graphicsFamily.value(), indices.presentFamily.value() 
+	};
 	float queuePriority = 1.0f;
-	queueCreateInfo.pQueuePriorities = &queuePriority;
+	for (uint32_t queueFamily : uniqueQueueFamilies) {
+		VkDeviceQueueCreateInfo queueCreateInfo{};
+		queueCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_QUEUE_CREATE_INFO;
+		queueCreateInfo.queueFamilyIndex = indices.graphicsFamily.value();
+		queueCreateInfo.queueCount = 1;
+		queueCreateInfo.pQueuePriorities = &queuePriority;
+		queueCreateInfoStructures.push_back(queueCreateInfo);
+	}
+	
 
 	VkPhysicalDeviceFeatures logicalDeviceFeatures{};
 
 	VkDeviceCreateInfo logicalDeviceCreateInfo{};
 	logicalDeviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
-	logicalDeviceCreateInfo.pQueueCreateInfos = &queueCreateInfo;
-	logicalDeviceCreateInfo.queueCreateInfoCount = 1;
+	logicalDeviceCreateInfo.queueCreateInfoCount = static_cast<uint32_t>(queueCreateInfoStructures.size());
+	logicalDeviceCreateInfo.pQueueCreateInfos = queueCreateInfoStructures.data();
 
 	logicalDeviceCreateInfo.pEnabledFeatures = &logicalDeviceFeatures;
 	logicalDeviceCreateInfo.enabledExtensionCount = 0; // enable swapchain extension for gpu
@@ -161,6 +211,7 @@ void VulkanBackend::createLogicalDevice()
 		std::cout << logicalDeviceError.what() << std::endl;
 	}
 	vkGetDeviceQueue(logicalDevice, indices.graphicsFamily.value(), 0, &graphicsQueue);
+	vkGetDeviceQueue(logicalDevice, indices.presentFamily.value(), 0, &presentationQueue);
 }
 
 bool VulkanBackend::isDeviceSuitable(VkPhysicalDevice GPU)
@@ -175,6 +226,7 @@ bool VulkanBackend::isDeviceSuitable(VkPhysicalDevice GPU)
 		std::cout << "NVIDIA Driver version : " << gpuProperties.driverVersion << std::endl; // i should test it for nvidia GPU
 		gpuInfo.InitializeAGSLib(); // print gpu information for debug
 	}
+
 	//VkPhysicalDeviceFeatures gpuFeatures;
 	
 	// does GPU support commands that we need?
@@ -187,22 +239,34 @@ QueueFamilyIndices VulkanBackend::findQueueFamilies(VkPhysicalDevice GPU)
 	//Queues are essentially simply accept different commands supported by GPUs and as far as i can see
 	// all the gpus support 4 most common flags which are - VK_QUEUE_GRAPHICS_BIT, VK_QUEUE_COMPUTE_BIT
 	// VK_QUEUE_TRANSFER_BIT and VK_QUEUE_SPARSE_BINDING_BIT
+	
 	QueueFamilyIndices indices;
 	uint32_t queueFamilyCount = 0;
 	vkGetPhysicalDeviceQueueFamilyProperties(GPU, &queueFamilyCount, nullptr);
+
 	std::vector<VkQueueFamilyProperties> queueFamilies(queueFamilyCount);
 	vkGetPhysicalDeviceQueueFamilyProperties(GPU, &queueFamilyCount, queueFamilies.data());
+
 	int i = 0;
 	for (const auto& queueFamily : queueFamilies) {
-		if (queueFamily.queueFlags && VK_QUEUE_GRAPHICS_BIT && VK_QUEUE_COMPUTE_BIT && VK_QUEUE_TRANSFER_BIT) {
+		if (queueFamily.queueFlags & VK_QUEUE_GRAPHICS_BIT) {
 			indices.graphicsFamily = i;
 		}
+		VkBool32 presentationSupport = false;
+		vkGetPhysicalDeviceSurfaceSupportKHR(physicalDevice, i, vulkanWindowSurface, &presentationSupport);
+
+		if (presentationSupport) {
+			//indices.presentFamily = i;
+		}
+
 		if (indices.isComplete()) {
 			break;
 		}
 		i++;
 	}
 	return indices;
+
+	
 }
 
 VkResult VulkanBackend::createDebugUtilsMessengerEXT(VkInstance instance, const VkDebugUtilsMessengerCreateInfoEXT* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkDebugUtilsMessengerEXT* pDebugMessenger)
