@@ -279,6 +279,7 @@ void VulkanBackend::createSwapChain()
 }
 bool VulkanBackend::isDeviceSuitable(VkPhysicalDevice GPU)
 {
+	physicalDevice = GPU;
 	// get a suitable physical GPU, in this function we can add more checks for GPUs
 	// and output various GPU information for debug purposes
 	VkPhysicalDeviceProperties gpuProperties;
@@ -307,6 +308,7 @@ bool VulkanBackend::isDeviceSuitable(VkPhysicalDevice GPU)
 
 bool VulkanBackend::checkDeviceExtensionSupport(VkPhysicalDevice GPU)
 {
+	physicalDevice = GPU;
 	uint32_t extensionCount;
 	vkEnumerateDeviceExtensionProperties(GPU, nullptr, &extensionCount, nullptr);
 
@@ -324,10 +326,11 @@ bool VulkanBackend::checkDeviceExtensionSupport(VkPhysicalDevice GPU)
 
 QueueFamilyIndices VulkanBackend::findQueueFamilies(VkPhysicalDevice GPU)
 {
+	physicalDevice = GPU;
 	//Queues are essentially simply accept different commands supported by GPUs and as far as i can see
 	// all the gpus support 4 most common flags which are - VK_QUEUE_GRAPHICS_BIT, VK_QUEUE_COMPUTE_BIT
 	// VK_QUEUE_TRANSFER_BIT and VK_QUEUE_SPARSE_BINDING_BIT
-	physicalDevice = GPU;
+	
 	QueueFamilyIndices indices;
 	uint32_t queueFamilyCount = 0;
 	vkGetPhysicalDeviceQueueFamilyProperties(GPU, &queueFamilyCount, nullptr);
@@ -358,6 +361,7 @@ QueueFamilyIndices VulkanBackend::findQueueFamilies(VkPhysicalDevice GPU)
 }
 
 SwapChainSupportDetails VulkanBackend::querySwapChainSupportDetails(VkPhysicalDevice GPU) {
+	physicalDevice = GPU;
 	SwapChainSupportDetails swapChainDetails;
 
 	vkGetPhysicalDeviceSurfaceCapabilitiesKHR(GPU, vulkanWindowSurface, &swapChainDetails.surfaceCapabilities);
