@@ -276,6 +276,14 @@ void VulkanBackend::createSwapChain()
 		std::runtime_error swapChainError("failed to create swap chain!");
 		std::cout << swapChainError.what() << std::endl;
 	}
+	// resize image buffer
+	vkGetSwapchainImagesKHR(logicalDevice, swapChain, &imageCount, nullptr);
+	swapChainImages.resize(imageCount);
+	vkGetSwapchainImagesKHR(logicalDevice, swapChain, &imageCount, swapChainImages.data());
+
+
+	swapChainImageFormat = surfaceFormat.format;
+	swapChainExtent = imageExtent;
 }
 bool VulkanBackend::isDeviceSuitable(VkPhysicalDevice GPU)
 {
@@ -284,7 +292,7 @@ bool VulkanBackend::isDeviceSuitable(VkPhysicalDevice GPU)
 	// and output various GPU information for debug purposes
 	VkPhysicalDeviceProperties gpuProperties;
 	vkGetPhysicalDeviceProperties(GPU, &gpuProperties);
-	//gpuProperties.driverVersion = static_cast<char*>(gpuDriverInfo.driverName);
+
 	if (enableValidationLayers) {
 		std::cerr << "Selected device: " << gpuProperties.deviceName << std::endl;
 		std::cout << "NVIDIA Driver version : " << gpuProperties.driverVersion << std::endl; // i should test it for nvidia GPU
@@ -303,7 +311,7 @@ bool VulkanBackend::isDeviceSuitable(VkPhysicalDevice GPU)
 		// basically gpu must support at least one surface format and one presentation mode i guess
 		swapChainAdequate = !swapChainSupportDetails.surfaceFormats.empty() && !swapChainSupportDetails.presentationModes.empty();
 	}
-	return indices.isComplete() && extensionsSupported && swapChainAdequate; // swapChainAdequiate is false for some reason
+	return indices.isComplete() && extensionsSupported && swapChainAdequate; 
 }
 
 bool VulkanBackend::checkDeviceExtensionSupport(VkPhysicalDevice GPU)
