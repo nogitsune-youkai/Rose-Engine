@@ -105,7 +105,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)ThirdParty\API\GLFW;$(ProjectDir)ThirdParty\API\Vulkan\Include\;$(ProjectDir)ThirdParty\API\imgui-1.91.7;$(ProjectDir)ThirdParty\API\AGS_SDK-6.2.0\inc\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)ThirdParty\API\GLFW;$(ProjectDir)ThirdParty\API\Vulkan 1.4.304\Include\;$(ProjectDir)ThirdParty\API\imgui-1.91.7;$(ProjectDir)ThirdParty\API\AGS_SDK-6.2.0\inc\</AdditionalIncludeDirectories>
       <LanguageStandard_C>stdclatest</LanguageStandard_C>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <Optimization>Disabled</Optimization>
@@ -113,9 +113,9 @@
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>vulkan-1.lib;glfw3.lib;amd_ags_x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)ThirdParty\Libraries\AGS\lib;$(ProjectDir)ThirdParty\Libraries\Vulkan libraries;$(ProjectDir)ThirdParty\Libraries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <AdditionalDependencies>vulkan-1.lib;glfw3.lib;amd_ags_x64.lib;shaderc_combinedd.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)ThirdParty\Libraries\AGS\lib;$(ProjectDir)ThirdParty\Libraries\Vulkan 1.4.304 libraries;$(ProjectDir)ThirdParty\Libraries\Vulkan 1.4.304 libraries\Debug;$(ProjectDir)ThirdParty\Libraries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>libcmt.lib;msvcrt.lib;libcmtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
@@ -132,7 +132,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>NDEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
-      <AdditionalIncludeDirectories>$(ProjectDir)ThirdParty\API\GLFW;$(ProjectDir)ThirdParty\API\Vulkan\Include\;$(ProjectDir)ThirdParty\API\imgui-1.91.7;D:\Programming\Rose Engine\Rose Engine\ThirdParty\API\AGS_SDK-6.2.0\inc</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir)ThirdParty\API\GLFW;$(ProjectDir)ThirdParty\API\Vulkan 1.4.304\Include\;$(ProjectDir)ThirdParty\API\imgui-1.91.7;D:\Programming\Rose Engine\Rose Engine\ThirdParty\API\AGS_SDK-6.2.0\inc</AdditionalIncludeDirectories>
       <LanguageStandard>stdcpplatest</LanguageStandard>
       <MultiProcessorCompilation>true</MultiProcessorCompilation>
     </ClCompile>
@@ -141,8 +141,8 @@
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <OptimizeReferences>true</OptimizeReferences>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>vulkan-1.lib;glfw3.lib;amd_ags_x64.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>$(ProjectDir)ThirdParty\Libraries\AGS\lib;$(ProjectDir)ThirdParty\Libraries\Vulkan libraries;$(ProjectDir)ThirdParty\Libraries</AdditionalLibraryDirectories>
+      <AdditionalDependencies>vulkan-1.lib;glfw3.lib;amd_ags_x64.lib;shaderc_combined.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>$(ProjectDir)ThirdParty\Libraries\AGS\lib;$(ProjectDir)ThirdParty\Libraries\Vulkan 1.4.304 libraries;$(ProjectDir)ThirdParty\Libraries\Vulkan 1.4.304 libraries\Release;$(ProjectDir)ThirdParty\Libraries</AdditionalLibraryDirectories>
       <IgnoreSpecificDefaultLibraries>libcmt.lib;libcmtd.lib;msvcrtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
     </Link>
   </ItemDefinitionGroup>
@@ -150,6 +150,7 @@
     <ClCompile Include="GPUInformation.cpp" />
     <ClCompile Include="GUI\Editor.cpp" />
     <ClCompile Include="Main.cpp" />
+    <ClCompile Include="Engine\Core\GraphicsAPI\Vulkan\ShaderCompiler.cpp" />
     <ClCompile Include="ThirdParty\API\imgui-1.91.7\imgui.cpp" />
     <ClCompile Include="ThirdParty\API\imgui-1.91.7\imgui_demo.cpp" />
     <ClCompile Include="ThirdParty\API\imgui-1.91.7\imgui_draw.cpp" />
@@ -160,10 +161,15 @@
   <ItemGroup>
     <ClInclude Include="Engine\Core\GraphicsAPI\GPU Information\GPUInformation.h" />
     <ClInclude Include="GUI\Editor.h" />
+    <ClInclude Include="Engine\Core\GraphicsAPI\Vulkan\ShaderCompiler.h" />
     <ClInclude Include="ThirdParty\API\imgui-1.91.7\imconfig.h" />
     <ClInclude Include="ThirdParty\API\imgui-1.91.7\imgui.h" />
     <ClInclude Include="ThirdParty\API\imgui-1.91.7\imgui_internal.h" />
     <ClInclude Include="Engine\Core\GraphicsAPI\Vulkan\VulkanBackend.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Engine\Core\Shaders\shader.fragment" />
+    <None Include="Engine\Core\Shaders\shader.vertex" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

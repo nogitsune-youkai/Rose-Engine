@@ -27,6 +27,9 @@
     <Filter Include="Debug\GPU Information">
       <UniqueIdentifier>{e9222ffd-12cf-4198-968c-36ece743afb7}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Shaders">
+      <UniqueIdentifier>{2f462a84-b1ff-4707-90c6-84083fcfe0e2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -56,6 +59,9 @@
     <ClCompile Include="GUI\Editor.cpp">
       <Filter>Editor\GUI</Filter>
     </ClCompile>
+    <ClCompile Include="Engine\Core\GraphicsAPI\Vulkan\ShaderCompiler.cpp">
+      <Filter>GraphicsAPI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="ThirdParty\API\imgui-1.91.7\imgui.h">
@@ -76,5 +82,16 @@
     <ClInclude Include="Engine\Core\GraphicsAPI\GPU Information\GPUInformation.h">
       <Filter>Debug\GPU Information</Filter>
     </ClInclude>
+    <ClInclude Include="Engine\Core\GraphicsAPI\Vulkan\ShaderCompiler.h">
+      <Filter>GraphicsAPI</Filter>
+    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Engine\Core\Shaders\shader.vertex">
+      <Filter>Shaders</Filter>
+    </None>
+    <None Include="Engine\Core\Shaders\shader.fragment">
+      <Filter>Shaders</Filter>
+    </None>
   </ItemGroup>
 </Project>

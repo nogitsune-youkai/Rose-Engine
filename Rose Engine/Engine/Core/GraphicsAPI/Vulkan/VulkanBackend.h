@@ -57,6 +57,7 @@ private:
 	void createLogicalDevice();
 	void createSwapChain();
 	void createImageViews();
+	void createGraphicsPipeline();
 	bool isDeviceSuitable(VkPhysicalDevice GPU);
 	bool checkDeviceExtensionSupport(VkPhysicalDevice GPU);
 	
