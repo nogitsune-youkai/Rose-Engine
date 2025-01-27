@@ -50,9 +50,6 @@
     <ClCompile Include="ThirdParty\API\imgui-1.91.7\imgui_demo.cpp">
       <Filter>Imgui</Filter>
     </ClCompile>
-    <ClCompile Include="GPUInformation.cpp">
-      <Filter>Debug\GPU Information</Filter>
-    </ClCompile>
     <ClCompile Include="Engine\Core\GraphicsAPI\Vulkan\VulkanBackend.cpp">
       <Filter>GraphicsAPI</Filter>
     </ClCompile>
@@ -61,6 +58,9 @@
     </ClCompile>
     <ClCompile Include="Engine\Core\GraphicsAPI\Vulkan\ShaderCompiler.cpp">
       <Filter>GraphicsAPI</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine\Core\Debug\GPU Information\GPUInformation.cpp">
+      <Filter>Debug\GPU Information</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -79,7 +79,7 @@
     <ClInclude Include="GUI\Editor.h">
       <Filter>Editor\GUI</Filter>
     </ClInclude>
-    <ClInclude Include="Engine\Core\GraphicsAPI\GPU Information\GPUInformation.h">
+    <ClInclude Include="Engine\Core\Debug\GPU Information\GPUInformation.h">
       <Filter>Debug\GPU Information</Filter>
     </ClInclude>
     <ClInclude Include="Engine\Core\GraphicsAPI\Vulkan\ShaderCompiler.h">

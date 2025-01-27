@@ -105,7 +105,7 @@
       <PreprocessorDefinitions>_DEBUG;_WINDOWS;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
       <LanguageStandard>stdcpplatest</LanguageStandard>
-      <AdditionalIncludeDirectories>$(ProjectDir)ThirdParty\API\GLFW;$(ProjectDir)ThirdParty\API\Vulkan 1.4.304\Include\;$(ProjectDir)ThirdParty\API\imgui-1.91.7;$(ProjectDir)ThirdParty\API\AGS_SDK-6.2.0\inc\</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>$(ProjectDir);$(ProjectDir)ThirdParty\API\GLFW;$(ProjectDir)ThirdParty\API\Vulkan 1.4.304\Include\;$(ProjectDir)ThirdParty\API\imgui-1.91.7;$(ProjectDir)ThirdParty\API\AGS_SDK-6.2.0\inc\</AdditionalIncludeDirectories>
       <LanguageStandard_C>stdclatest</LanguageStandard_C>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <Optimization>Disabled</Optimization>
@@ -149,7 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="GPUInformation.cpp" />
+    <ClCompile Include="Engine\Core\Debug\GPU Information\GPUInformation.cpp" />
     <ClCompile Include="GUI\Editor.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Engine\Core\GraphicsAPI\Vulkan\ShaderCompiler.cpp" />
@@ -161,7 +161,7 @@
     <ClCompile Include="Engine\Core\GraphicsAPI\Vulkan\VulkanBackend.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Engine\Core\GraphicsAPI\GPU Information\GPUInformation.h" />
+    <ClInclude Include="Engine\Core\Debug\GPU Information\GPUInformation.h" />
     <ClInclude Include="GUI\Editor.h" />
     <ClInclude Include="Engine\Core\GraphicsAPI\Vulkan\ShaderCompiler.h" />
     <ClInclude Include="ThirdParty\API\imgui-1.91.7\imconfig.h" />

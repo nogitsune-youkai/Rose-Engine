@@ -13,7 +13,7 @@
 #include <algorithm> 
 #include <limits>
 
-#include "../GPU Information/GPUInformation.h"
+#include "Engine/Core/Debug/GPU Information/GPUInformation.h"
 #include "vulkan/vulkan.h"
 #include "glfw3.h"
 #include "ShaderCompiler.h"
