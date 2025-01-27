@@ -27,6 +27,7 @@ void VulkanBackend::initVulkan()
 	createLogicalDevice();
 	createSwapChain();
 	createImageViews();
+	createGraphicsPipeline();
 }
 
 void VulkanBackend::vulkanRenderMainLoop()
@@ -318,7 +319,15 @@ void VulkanBackend::createImageViews()
 }
 void VulkanBackend::createGraphicsPipeline()
 {
-
+	const char shaderText[] = { "#version 450\n"
+							   "layout(location = 0) in vec3 fragColor;\n"
+							   "layout(location = 0) out vec4 outColor;\n"
+							   "void main() {outColor = vec4(fragColor, 1.0);\n"
+								"}" 
+	};
+	
+	auto preProcessed = shaderCompiler.processShaderFile("shader.fragment", shaderc_glsl_fragment_shader, shaderText);
+	auto compiledToAssembly = shaderCompiler.compileShaderToAssembly("shader.fragment", shaderc_fragment_shader, shaderText);
 }
 bool VulkanBackend::isDeviceSuitable(VkPhysicalDevice GPU)
 {

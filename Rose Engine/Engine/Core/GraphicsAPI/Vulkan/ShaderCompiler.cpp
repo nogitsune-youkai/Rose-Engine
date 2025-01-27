@@ -1,19 +1,49 @@
 #include "ShaderCompiler.h"
 
-std::string ShaderCompiler::processShaderFile(const std::string& glslTextFilePath, shaderc_shader_kind shaderKind, std::string shaderFilePath)
-{
-	shaderc::Compiler compiler;
-	shaderc::CompileOptions compileOptions;
-	compileOptions.AddMacroDefinition("-o"); // add -o flag for compileOptions
-	shaderc::PreprocessedSourceCompilationResult compilationResult = compiler.PreprocessGlsl(glslTextFilePath, shaderKind, shaderFilePath.c_str(), compileOptions);
+#ifdef NDEBUG
+constexpr bool enableDebugFacilities = false;
+#else
+constexpr bool enableDebugFacilities = true;
+#endif
 
-	if (compilationResult.GetCompilationStatus() != shaderc_compilation_status_success) {
-		std::cerr << compilationResult.GetErrorMessage();
-		return "";
+std::string ShaderCompiler::processShaderFile(const std::string& shaderName, shaderc_shader_kind shaderKind, std::string shaderSourceFile)
+{
+	
+	//compileOptions.AddMacroDefinition("Preprocess", "-E"); // add -o flag for compileOptions
+	shaderc::PreprocessedSourceCompilationResult compilationResult = compiler.PreprocessGlsl(shaderName, shaderKind, shaderSourceFile.c_str(), compileOptions);
+
+	if (enableDebugFacilities) {
+		if (shaderName.empty()) {
+			std::cerr << "Shader preprocessing failed" << std::endl;
+		}
+		else {
+			std::cerr << "Shader preprocessed successfully" << std::endl << shaderSourceFile << std::endl;
+		}
+	}
+	return { compilationResult.cbegin(), compilationResult.cend() };
+}
+
+std::string ShaderCompiler::compileShaderToAssembly(const std::string& glslShaderText, shaderc_shader_kind shaderKind, std::string shaderSourcePath)
+{
+	
+	if (enableDebugFacilities) {
+		compileOptions.SetOptimizationLevel(shaderc_optimization_level_zero);
 	}
 	else {
-		std::cerr << "Shader preprocessed successfully" << std::endl;
+		compileOptions.SetOptimizationLevel(shaderc_optimization_level_performance);
 	}
 
-	return { compilationResult.cbegin(), compilationResult.cend() };
+	shaderc::AssemblyCompilationResult assemblyCompilationResult = compiler.CompileGlslToSpvAssembly(glslShaderText, shaderKind, shaderSourcePath.c_str(), compileOptions);
+
+	if (assemblyCompilationResult.GetCompilationStatus() != shaderc_compilation_status_success) {
+		std::cerr << assemblyCompilationResult.GetErrorMessage();
+		return "";
+	}
+
+	return { assemblyCompilationResult.cbegin(), assemblyCompilationResult.cend() };
+}
+
+std::string ShaderCompiler::readGlslShaderText(std::filesystem::path)
+{
+	return std::string();
 }

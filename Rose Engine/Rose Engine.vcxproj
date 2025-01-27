@@ -110,15 +110,17 @@
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
       <Optimization>Disabled</Optimization>
       <ShowIncludes>false</ShowIncludes>
+      <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalDependencies>vulkan-1.lib;glfw3.lib;amd_ags_x64.lib;shaderc_combinedd.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>$(ProjectDir)ThirdParty\Libraries\AGS\lib;$(ProjectDir)ThirdParty\Libraries\Vulkan 1.4.304 libraries;$(ProjectDir)ThirdParty\Libraries\Vulkan 1.4.304 libraries\Debug;$(ProjectDir)ThirdParty\Libraries;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <IgnoreAllDefaultLibraries>
       </IgnoreAllDefaultLibraries>
       <IgnoreSpecificDefaultLibraries>libcmt.lib;msvcrt.lib;libcmtd.lib;%(IgnoreSpecificDefaultLibraries)</IgnoreSpecificDefaultLibraries>
+      <AdditionalOptions>/ignore:4099 %(AdditionalOptions)</AdditionalOptions>
     </Link>
     <PostBuildEvent>
       <Command>xcopy /y "$(ProjectDir)ThirdParty\Libraries\AGS\lib\amd_ags_x64.dll" "$(OutDir)" </Command>

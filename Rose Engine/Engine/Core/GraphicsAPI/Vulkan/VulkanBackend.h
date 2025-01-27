@@ -16,6 +16,7 @@
 #include "../GPU Information/GPUInformation.h"
 #include "vulkan/vulkan.h"
 #include "glfw3.h"
+#include "ShaderCompiler.h"
 
 
 struct QueueFamilyIndices {
@@ -89,7 +90,7 @@ private:
 	VkFormat swapChainImageFormat;
 	VkExtent2D swapChainExtent;
 	std::vector<VkImageView> swapChainImageViews;
-
+	ShaderCompiler shaderCompiler;
 	
 
 };
