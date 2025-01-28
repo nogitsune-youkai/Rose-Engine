@@ -323,11 +323,12 @@ void VulkanBackend::createGraphicsPipeline()
 							   "layout(location = 0) in vec3 fragColor;\n"
 							   "layout(location = 0) out vec4 outColor;\n"
 							   "void main() {outColor = vec4(fragColor, 1.0);\n"
-								"}" 
+								"}\n" 
 	};
 	
-	auto preProcessed = shaderCompiler.processShaderFile("shader.fragment", shaderc_glsl_fragment_shader, shaderText);
-	auto compiledToAssembly = shaderCompiler.compileShaderToAssembly("shader.fragment", shaderc_fragment_shader, shaderText);
+	/*std::string preProcessed = shaderCompiler.processShaderFile(shaderText, shaderc_glsl_fragment_shader, "shader.frag");
+	auto assembly = shaderCompiler.compileShaderToAssembly("shader.frag", shaderc_glsl_fragment_shader, preProcessed);*/
+	auto compiledToAssembly = shaderCompiler.compileShader(shaderText, shaderc_fragment_shader, "shader.fragment");
 }
 bool VulkanBackend::isDeviceSuitable(VkPhysicalDevice GPU)
 {

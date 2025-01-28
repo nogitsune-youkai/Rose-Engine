@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstring>
 #include <string>
 #include <iostream>
 #include <filesystem>
@@ -9,8 +10,9 @@ class ShaderCompiler
 {
 public:
 	
-	std::string processShaderFile(const std::string & shaderName, shaderc_shader_kind shaderKind, std::string shaderSourceFile);
-	std::string compileShaderToAssembly(const std::string& glslShaderText, shaderc_shader_kind shaderKind, std::string shaderSourcePath);
+	std::string processShaderFile(const std::string& shaderSourceFile, shaderc_shader_kind shaderKind, const std::string & shaderName);
+	std::string compileShaderToAssembly(const std::string& shaderSourceFile, shaderc_shader_kind shaderKind, const std::string& shaderName);
+	std::vector<uint32_t> compileShader(const std::string& shaderSourceFile, shaderc_shader_kind shaderKind, const std::string& shaderName);
 
 
 
