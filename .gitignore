@@ -362,3 +362,6 @@ MigrationBackup/
 # Fody - auto-generated XML schema
 FodyWeavers.xsd
 /Rose Engine/Engine/Core/Shaders/Compile.bat
+/Rose Engine/Engine/Core/Shaders/fragmentShader.spv
+/Rose Engine/Engine/Core/Shaders/shader.vert
+/Rose Engine/Engine/Core/Shaders/vertexShader.spv

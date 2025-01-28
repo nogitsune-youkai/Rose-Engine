@@ -6,6 +6,9 @@ constexpr bool enableDebugFacilities = false;
 constexpr bool enableDebugFacilities = true;
 #endif
 
+
+
+
 std::string ShaderCompiler::processShaderFile(const std::string& shaderSourceFile, shaderc_shader_kind shaderKind, const std::string& shaderName)
 {
 	
@@ -45,6 +48,8 @@ std::string ShaderCompiler::compileShaderToAssembly(const std::string& shaderSou
 	return { assemblyCompilationResult.cbegin(), assemblyCompilationResult.cend() };
 }
 
+
+
 std::vector<uint32_t> ShaderCompiler::compileShader(const std::string& shaderSourceFile, shaderc_shader_kind shaderKind, const std::string& shaderName)
 {
 	processShaderFile(shaderSourceFile, shaderKind, shaderName.c_str());
@@ -67,10 +72,19 @@ std::vector<uint32_t> ShaderCompiler::compileShader(const std::string& shaderSou
 	return { shaderModule.cbegin(), shaderModule.cend() };
 }
 
-std::string ShaderCompiler::readGlslShaderText(std::filesystem::path)
-{
-	return std::string();
-}
+//const char ShaderCompiler::readGlslShaderText()
+//{
+//	 this is work in progress, will be probably implemented at later stages
+//	std::filesystem::path shaderDirectory = std::filesystem::current_path() / "Shaders";
+//	bool directoryExists = std::filesystem::exists(shaderDirectory);
+//	if (!directoryExists) {
+//		directoryExists = std::filesystem::create_directories(shaderDirectory);
+//	}
+//	
+//	std::filesystem::path shadersDirectory = std::filesystem::current_path().append("Engine").append("Core").append("Shaders"); // L"D:\\Programming\\Rose Engine\\Rose Engine"
+//	std::filesystem::path fileNames = shadersDirectory.filename().string();
+//	std::cerr << fileNames.string();
+//}
 
 std::string ShaderCompiler::defineShaderType()
 {

@@ -326,9 +326,9 @@ void VulkanBackend::createGraphicsPipeline()
 								"}\n" 
 	};
 	
-	/*std::string preProcessed = shaderCompiler.processShaderFile(shaderText, shaderc_glsl_fragment_shader, "shader.frag");
-	auto assembly = shaderCompiler.compileShaderToAssembly("shader.frag", shaderc_glsl_fragment_shader, preProcessed);*/
-	auto compiledToAssembly = shaderCompiler.compileShader(shaderText, shaderc_fragment_shader, "shader.fragment");
+	
+	//auto compiledToAssembly = shaderCompiler.compileShader(shaderText, shaderc_fragment_shader, "shader.fragment");
+	//shaderCompiler.readGlslShaderText();
 }
 bool VulkanBackend::isDeviceSuitable(VkPhysicalDevice GPU)
 {
