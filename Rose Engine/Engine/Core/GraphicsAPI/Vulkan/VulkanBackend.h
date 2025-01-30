@@ -59,6 +59,7 @@ private:
 	void createSwapChain();
 	void createImageViews();
 	void createGraphicsPipeline();
+	
 	bool isDeviceSuitable(VkPhysicalDevice GPU);
 	bool checkDeviceExtensionSupport(VkPhysicalDevice GPU);
 	
@@ -76,6 +77,7 @@ private:
 														VkDebugUtilsMessageTypeFlagsEXT messageType,
 														const VkDebugUtilsMessengerCallbackDataEXT* pCallbackData,
 														void* pUserData);
+	VkShaderModule createShaderModule(const std::vector<char>& code);
 	GLFWwindow* window;
 	VkInstance vulkanInstance;
 	VkDebugUtilsMessengerEXT debugMessenger;

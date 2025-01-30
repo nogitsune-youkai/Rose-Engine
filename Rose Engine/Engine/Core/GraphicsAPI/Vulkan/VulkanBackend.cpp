@@ -326,6 +326,29 @@ void VulkanBackend::createGraphicsPipeline()
 								"}\n" 
 	};
 	
+	auto vertexShaderCode = shaderCompiler.readFile("D:/Programming/Rose Engine/Rose Engine/Engine/Core/Shaders/vertexShader.spv");
+	auto fragmentShaderCode = shaderCompiler.readFile("D:/Programming/Rose Engine/Rose Engine/Engine/Core/Shaders/fragmentShader.spv");
+
+	VkShaderModule vertexShaderModule = createShaderModule(vertexShaderCode);
+	VkShaderModule fragmentShaderModule = createShaderModule(fragmentShaderCode);
+
+	vkDestroyShaderModule(logicalDevice, fragmentShaderModule, nullptr);
+	vkDestroyShaderModule(logicalDevice, vertexShaderModule, nullptr);
+
+	VkPipelineShaderStageCreateInfo vertexShaderStageCreateInfo = {};
+	vertexShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+	vertexShaderStageCreateInfo.stage = VK_SHADER_STAGE_VERTEX_BIT;
+	vertexShaderStageCreateInfo.module = vertexShaderModule;
+	vertexShaderStageCreateInfo.pName = "main"; // function name to invoke inside shader module code
+
+	// same but this time for fragment shader
+	VkPipelineShaderStageCreateInfo fragmentShaderStageCreateInfo{};
+	fragmentShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
+	fragmentShaderStageCreateInfo.stage = VK_SHADER_STAGE_FRAGMENT_BIT;
+	fragmentShaderStageCreateInfo.module = fragmentShaderModule;
+	fragmentShaderStageCreateInfo.pName = "main";
+
+	VkPipelineShaderStageCreateInfo shaderStages[] = { vertexShaderStageCreateInfo, fragmentShaderStageCreateInfo }; // array with these 2 structs for future references
 	
 	//auto compiledToAssembly = shaderCompiler.compileShader(shaderText, shaderc_fragment_shader, "shader.fragment");
 	//shaderCompiler.readGlslShaderText();
@@ -547,4 +570,19 @@ VKAPI_ATTR VkBool32 VKAPI_CALL VulkanBackend::debugCallback(VkDebugUtilsMessageS
 	
 
 	return VK_FALSE;
+}
+
+VkShaderModule VulkanBackend::createShaderModule(const std::vector<char>& code)
+{
+	VkShaderModuleCreateInfo shaderCreateInfo = {};
+	shaderCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
+	shaderCreateInfo.codeSize = code.size();
+	shaderCreateInfo.pCode = reinterpret_cast<const uint32_t*>(code.data());
+
+	VkShaderModule shaderModule;
+	if (vkCreateShaderModule(logicalDevice, &shaderCreateInfo, nullptr, &shaderModule) != VK_SUCCESS) {
+		std::runtime_error shaderModuleError("failed to create shader module!");
+		std::cerr << shaderModuleError.what() << std::endl;
+	}
+	return shaderModule;
 }

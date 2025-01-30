@@ -4,6 +4,7 @@
 #include <string>
 #include <iostream>
 #include <filesystem>
+#include <fstream>
 
 #include "shaderc/shaderc.hpp"
 class ShaderCompiler
@@ -12,6 +13,7 @@ public:
 	
 	//const char readGlslShaderText(); // not implemented yet
 	std::vector<uint32_t> compileShader(const std::string& shaderSourceFile, shaderc_shader_kind shaderKind, const std::string& shaderName);
+	static std::vector<char> readFile(const std::string& filename);
 
 
 
