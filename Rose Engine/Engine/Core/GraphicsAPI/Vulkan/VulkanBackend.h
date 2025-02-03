@@ -91,6 +91,7 @@ private:
 	std::vector<VkImage> swapChainImages;
 	VkFormat swapChainImageFormat;
 	VkExtent2D swapChainExtent;
+	VkPipelineLayout pipelineLayout;
 	std::vector<VkImageView> swapChainImageViews;
 	ShaderCompiler shaderCompiler;
 	
