@@ -59,6 +59,7 @@ private:
 	void createSwapChain();
 	void createImageViews();
 	void createGraphicsPipeline();
+	void createRenderPass();
 	
 	bool isDeviceSuitable(VkPhysicalDevice GPU);
 	bool checkDeviceExtensionSupport(VkPhysicalDevice GPU);
@@ -91,6 +92,7 @@ private:
 	std::vector<VkImage> swapChainImages;
 	VkFormat swapChainImageFormat;
 	VkExtent2D swapChainExtent;
+	VkRenderPass renderPass;
 	VkPipelineLayout pipelineLayout;
 	std::vector<VkImageView> swapChainImageViews;
 	ShaderCompiler shaderCompiler;
