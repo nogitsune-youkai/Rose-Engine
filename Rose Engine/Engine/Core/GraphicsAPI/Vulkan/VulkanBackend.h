@@ -60,6 +60,7 @@ private:
 	void createImageViews();
 	void createGraphicsPipeline();
 	void createRenderPass();
+	void createFrameBuffers();
 	
 	bool isDeviceSuitable(VkPhysicalDevice GPU);
 	bool checkDeviceExtensionSupport(VkPhysicalDevice GPU);
@@ -96,6 +97,7 @@ private:
 	VkPipelineLayout pipelineLayout;
 	VkPipeline graphicsPipeline;
 	std::vector<VkImageView> swapChainImageViews;
+	std::vector<VkFramebuffer> swapChainFramebuffers; // basically all of the images we are going to render are stored here
 	ShaderCompiler shaderCompiler;
 	
 

@@ -29,6 +29,7 @@ void VulkanBackend::initVulkan()
 	createImageViews();
 	createRenderPass();
 	createGraphicsPipeline();
+	createFrameBuffers();
 }
 
 void VulkanBackend::vulkanRenderMainLoop()
@@ -42,6 +43,9 @@ void VulkanBackend::vulkanRenderMainLoop()
 void VulkanBackend::cleanUp()
 {
 	// vulkan instance must be destroyed right before program exits, all other vulkan resources must be destroyed before the instance destroyed
+	for (auto framebuffer : swapChainFramebuffers) {
+		vkDestroyFramebuffer(logicalDevice, framebuffer, nullptr);
+	}
 	vkDestroyPipeline(logicalDevice, graphicsPipeline, nullptr);
 	vkDestroyPipelineLayout(logicalDevice, pipelineLayout, nullptr);
 	for (auto imageView : swapChainImageViews) {
@@ -502,6 +506,30 @@ void VulkanBackend::createRenderPass()
 	if (vkCreateRenderPass(logicalDevice, &renderPassCreateInfo, nullptr, &renderPass) != VK_SUCCESS) {
 		std::runtime_error renderPassError("failed to create render pass!");
 		std::cerr << renderPassError.what() << std::endl;
+	}
+}
+void VulkanBackend::createFrameBuffers()
+{
+	swapChainFramebuffers.resize(swapChainImageViews.size()); // resize to hold all of the frameBuffers
+
+	for (size_t i = 0; i < swapChainImageViews.size(); i++) {
+		VkImageView attachments[] = {
+		swapChainImageViews[i]
+		};
+
+
+		VkFramebufferCreateInfo frameBufferCreateInfo = {};
+		frameBufferCreateInfo.sType = VK_STRUCTURE_TYPE_FRAMEBUFFER_CREATE_INFO;
+		frameBufferCreateInfo.renderPass = renderPass;
+		frameBufferCreateInfo.attachmentCount = 1;
+		frameBufferCreateInfo.pAttachments = attachments;
+		frameBufferCreateInfo.width = swapChainExtent.width;
+		frameBufferCreateInfo.height = swapChainExtent.height;
+		frameBufferCreateInfo.layers = 1;
+
+		if (vkCreateFramebuffer(logicalDevice, &frameBufferCreateInfo, nullptr, &swapChainFramebuffers[i]) != VK_SUCCESS) {
+			throw std::runtime_error("failed to create framebuffer!");
+		}
 	}
 }
 bool VulkanBackend::isDeviceSuitable(VkPhysicalDevice GPU)
