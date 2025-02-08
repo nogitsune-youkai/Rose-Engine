@@ -42,6 +42,7 @@ void VulkanBackend::vulkanRenderMainLoop()
 void VulkanBackend::cleanUp()
 {
 	// vulkan instance must be destroyed right before program exits, all other vulkan resources must be destroyed before the instance destroyed
+	vkDestroyPipeline(logicalDevice, graphicsPipeline, nullptr);
 	vkDestroyPipelineLayout(logicalDevice, pipelineLayout, nullptr);
 	for (auto imageView : swapChainImageViews) {
 		vkDestroyImageView(logicalDevice, imageView, nullptr);
@@ -336,8 +337,6 @@ void VulkanBackend::createGraphicsPipeline()
 	VkShaderModule vertexShaderModule = createShaderModule(vertexShaderCode);
 	VkShaderModule fragmentShaderModule = createShaderModule(fragmentShaderCode);
 
-	vkDestroyShaderModule(logicalDevice, fragmentShaderModule, nullptr);
-	vkDestroyShaderModule(logicalDevice, vertexShaderModule, nullptr);
 
 	VkPipelineShaderStageCreateInfo vertexShaderStageCreateInfo = {};
 	vertexShaderStageCreateInfo.sType = VK_STRUCTURE_TYPE_PIPELINE_SHADER_STAGE_CREATE_INFO;
@@ -439,8 +438,37 @@ void VulkanBackend::createGraphicsPipeline()
 	colorBlending.blendConstants[3] = 0.0f; // Optional
 
 	
+	// Graphics pipeline
+	VkGraphicsPipelineCreateInfo graphicsPipelineCreateInfo = {};
+	graphicsPipelineCreateInfo.sType = VK_STRUCTURE_TYPE_GRAPHICS_PIPELINE_CREATE_INFO;
+	graphicsPipelineCreateInfo.stageCount = 2;
+	graphicsPipelineCreateInfo.pStages = shaderStages;
+	graphicsPipelineCreateInfo.pVertexInputState = &vertexInputCreateInfo;
+	graphicsPipelineCreateInfo.pInputAssemblyState = &inputAssemblyStateCreateInfo;
+	graphicsPipelineCreateInfo.pViewportState = &viewPortState;
+	graphicsPipelineCreateInfo.pRasterizationState = &rasterizer;
+	graphicsPipelineCreateInfo.pMultisampleState = &multisampling;
+	graphicsPipelineCreateInfo.pDepthStencilState = nullptr; // Optional
+	graphicsPipelineCreateInfo.pColorBlendState = &colorBlending;
+	graphicsPipelineCreateInfo.pDynamicState = &dynamicState;
+	graphicsPipelineCreateInfo.layout = pipelineLayout;
+	graphicsPipelineCreateInfo.renderPass = renderPass;
+	graphicsPipelineCreateInfo.subpass = 0;
+	graphicsPipelineCreateInfo.basePipelineHandle = VK_NULL_HANDLE; // this can be used for extending the second or third, etc graphics pipeline in future
+	graphicsPipelineCreateInfo.basePipelineIndex = -1;
+
+	if (vkCreateGraphicsPipelines(logicalDevice, VK_NULL_HANDLE, 1, &graphicsPipelineCreateInfo, nullptr, &graphicsPipeline) != VK_SUCCESS) {
+		std::runtime_error graphicsPipelineError("failed to create graphics pipeline!");
+		std::cerr << graphicsPipelineError.what() << std::endl;
+	}
+
+	
 	//auto compiledToAssembly = shaderCompiler.compileShader(shaderText, shaderc_fragment_shader, "shader.fragment");
 	//shaderCompiler.readGlslShaderText();
+
+
+	vkDestroyShaderModule(logicalDevice, fragmentShaderModule, nullptr);
+	vkDestroyShaderModule(logicalDevice, vertexShaderModule, nullptr);
 }
 void VulkanBackend::createRenderPass()
 {
