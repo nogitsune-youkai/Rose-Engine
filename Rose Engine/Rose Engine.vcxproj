@@ -119,6 +119,8 @@
       <Optimization>Disabled</Optimization>
       <ShowIncludes>false</ShowIncludes>
       <DebugInformationFormat>EditAndContinue</DebugInformationFormat>
+      <MultiProcessorCompilation>true</MultiProcessorCompilation>
+      <MinimalRebuild>false</MinimalRebuild>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>

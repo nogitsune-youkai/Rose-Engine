@@ -61,6 +61,9 @@ private:
 	void createGraphicsPipeline();
 	void createRenderPass();
 	void createFrameBuffers();
+	void createCommandPool();
+	void createCommandBuffer();
+	void recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex);
 	
 	bool isDeviceSuitable(VkPhysicalDevice GPU);
 	bool checkDeviceExtensionSupport(VkPhysicalDevice GPU);
@@ -98,6 +101,8 @@ private:
 	VkPipeline graphicsPipeline;
 	std::vector<VkImageView> swapChainImageViews;
 	std::vector<VkFramebuffer> swapChainFramebuffers; // basically all of the images we are going to render are stored here
+	VkCommandPool commandPool;
+	VkCommandBuffer commandBuffer;
 	ShaderCompiler shaderCompiler;
 	
 
