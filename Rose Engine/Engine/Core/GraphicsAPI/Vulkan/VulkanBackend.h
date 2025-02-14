@@ -64,6 +64,8 @@ private:
 	void createCommandPool();
 	void createCommandBuffer();
 	void recordCommandBuffer(VkCommandBuffer commandBuffer, uint32_t imageIndex);
+	void drawFrame();
+	void createSyncObjects();
 	
 	bool isDeviceSuitable(VkPhysicalDevice GPU);
 	bool checkDeviceExtensionSupport(VkPhysicalDevice GPU);
@@ -104,6 +106,10 @@ private:
 	VkCommandPool commandPool;
 	VkCommandBuffer commandBuffer;
 	ShaderCompiler shaderCompiler;
+	//Semaphores
+	VkSemaphore imageAvailableSemaphore;
+	VkSemaphore renderFinishedSemaphore;
+	VkFence inFlightFence; // basically the fence which is alive during whole program as far as i understand it
 	
 
 };
